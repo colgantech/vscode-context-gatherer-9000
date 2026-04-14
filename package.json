@@ -1,0 +1,147 @@
+{
+  "name": "gather-context-files",
+  "repository": "recursivegarden",
+  "displayName": "Gather Context Files",
+  "description": "Accumulate file paths and line ranges into a clipboard payload for LLM context",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "contextGather.addSelection",
+        "title": "Context: Add Selection",
+        "icon": "$(add)"
+      },
+      {
+        "command": "contextGather.addFile",
+        "title": "Context: Add File",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "contextGather.addFolder",
+        "title": "Context: Add Folder",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "contextGather.copyToClipboard",
+        "title": "Context: Copy to Clipboard",
+        "icon": "$(clippy)"
+      },
+      {
+        "command": "contextGather.copyToClipboardAt",
+        "title": "Context: Copy to Clipboard with @",
+        "icon": "$(mention)"
+      },
+      {
+        "command": "contextGather.clear",
+        "title": "Context: Clear All",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "contextGather.removeEntry",
+        "title": "Remove",
+        "icon": "$(close)"
+      },
+      {
+        "command": "contextGather.refineEntry",
+        "title": "Set Line Range",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "contextGather.addExplorerItems",
+        "title": "Context: Add Selected Items"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "contextGather.addSelection",
+        "key": "ctrl+l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "contextGather.addExplorerItems",
+        "key": "ctrl+l",
+        "when": "filesExplorerFocus && !inputFocus"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "contextGather.copyToClipboard",
+          "when": "view == contextGatherView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "contextGather.copyToClipboardAt",
+          "when": "view == contextGatherView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "contextGather.clear",
+          "when": "view == contextGatherView",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "contextGather.removeEntry",
+          "when": "view == contextGatherView",
+          "group": "inline@1"
+        },
+        {
+          "command": "contextGather.refineEntry",
+          "when": "view == contextGatherView && viewItem != directory",
+          "group": "inline@2"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "contextGather.addExplorerItems",
+          "group": "contextGather@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "contextGather.addSelection",
+          "when": "editorHasSelection",
+          "group": "contextGather@1"
+        },
+        {
+          "command": "contextGather.addFile",
+          "group": "contextGather@2"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "contextGather",
+          "title": "Context",
+          "icon": "$(book)"
+        }
+      ]
+    },
+    "views": {
+      "contextGather": [
+        {
+          "id": "contextGatherView",
+          "name": "Gathered Context"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  }
+}
