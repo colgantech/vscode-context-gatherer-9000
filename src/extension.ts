@@ -520,6 +520,16 @@ export function activate(context: vscode.ExtensionContext) {
       buffer.clearAll();
     }),
 
+    vscode.commands.registerCommand("contextGather.clearAndAddSelection", async () => {
+      buffer.clearAll();
+      await vscode.commands.executeCommand("contextGather.addSelection");
+    }),
+
+    vscode.commands.registerCommand("contextGather.clearAndAddExplorerItems", async () => {
+      buffer.clearAll();
+      await vscode.commands.executeCommand("contextGather.addExplorerItems");
+    }),
+
     vscode.commands.registerCommand(
       "contextGather.removeEntry",
       (item: EntryItem) => {

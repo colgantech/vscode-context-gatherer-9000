@@ -55,6 +55,14 @@
       {
         "command": "contextGather.addExplorerItems",
         "title": "Context: Add Selected Items"
+      },
+      {
+        "command": "contextGather.clearAndAddSelection",
+        "title": "Context: Clear and Add Selection"
+      },
+      {
+        "command": "contextGather.clearAndAddExplorerItems",
+        "title": "Context: Clear and Add Selected Items"
       }
     ],
     "keybindings": [
@@ -66,6 +74,16 @@
       {
         "command": "contextGather.addExplorerItems",
         "key": "ctrl+l",
+        "when": "filesExplorerFocus && !inputFocus"
+      },
+      {
+        "command": "contextGather.clearAndAddSelection",
+        "key": "ctrl+shift+l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "contextGather.clearAndAddExplorerItems",
+        "key": "ctrl+shift+l",
         "when": "filesExplorerFocus && !inputFocus"
       }
     ],

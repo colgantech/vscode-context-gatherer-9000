@@ -1,8 +1,13 @@
 # Gather Context Files
 
-VS Code extension + companion API endpoint for curating file context to paste into LLM conversations.
+VS Code extension for curating file context to paste into LLM conversations.
 
+@package.json
+@tsconfig.json
 @justfile
+@src/extension.ts
+
+These are the only files in the project. Do not look around for any other files as there are none.
 
 Uses bun as the JavaScript runtime and package manager. Use `just` recipes, not raw `bun` commands.
 
@@ -19,13 +24,6 @@ The extension runs on WSL2 via VS Code's Remote - WSL. All file paths are Linux 
 **Keybinding `when` clauses and negative entries.** If a user removes a keybinding through VS Code's UI, it writes a negative entry like `{ "key": "ctrl+l", "command": "-contextGather.addExplorerItems", "when": "..." }` to keybindings.json. These match by exact `when` clause string — if the extension's package.json changes the `when` clause, the old negative entry won't cancel the new one, but the old positive default also won't be removed. Users may need to manually clean up stale negative entries.
 
 **Ctrl+L conflicts.** The extension binds Ctrl+L in two contexts: `editorTextFocus` (add selection/file) and `filesExplorerFocus && !inputFocus` (add explorer items). The default VS Code binding for Ctrl+L is `expandLineSelection` — the extension overrides it. The neovim extension (`vim_navigateCtrlL`) also binds Ctrl+L but only for `editorTextFocus`; users must add a negative entry to disable it. The `!inputFocus` guard prevents the keybinding from firing while renaming files in the explorer.
-
-## Two gather-context endpoints
-
-There are two separate gather-context API routes:
-
-- `POST /api/tools/gather-context` — resolves CLAUDE.md files, @-references, `.claude/rules/`, and uses `files-to-prompt`. For gathering full project context including instructions.
-- `POST /api/tools/gather-context-files` — raw file content to `<documents>` XML. No CLAUDE.md resolution. For gathering context from codebases you don't control. This is the endpoint paired with this VS Code extension.
 
 ## Persistence
 
